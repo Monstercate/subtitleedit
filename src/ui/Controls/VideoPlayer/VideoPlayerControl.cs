@@ -257,6 +257,7 @@ namespace Nikse.SubtitleEdit.Controls.VideoPlayer
                 Margin = new Thickness(0, 0, 3, 0),
             };
             Attached.SetIcon(_buttonPlay, "fa-solid fa-play");
+            ToolTip.SetTip(_buttonPlay, Se.Language.General.Play);
             _buttonPlay.Click += (_, _) =>
             {
                 _videoPlayerInstance.PlayOrPause();
@@ -281,6 +282,7 @@ namespace Nikse.SubtitleEdit.Controls.VideoPlayer
                 Source = this
             });
             Attached.SetIcon(buttonStop, "fa-solid fa-stop");
+            ToolTip.SetTip(buttonStop, Se.Language.General.PlayFromStartOfVideo);
             buttonStop.Click += (_, _) =>
             {
                 _videoPlayerInstance.Stop();
@@ -304,6 +306,7 @@ namespace Nikse.SubtitleEdit.Controls.VideoPlayer
                 Source = this
             });
             Attached.SetIcon(_buttonFullScreen, "fa-solid fa-expand");
+            ToolTip.SetTip(_buttonFullScreen, Se.Language.Options.Shortcuts.VideoFullScreen);
             _buttonFullScreen.Click += (_, _) => FullscreenRequested?.Invoke();
             stackPanel.Children.Add(_buttonFullScreen);
             _buttonFullScreen.Bind(Button.CommandProperty, new Binding
@@ -319,6 +322,7 @@ namespace Nikse.SubtitleEdit.Controls.VideoPlayer
                 IsVisible = false,
             };
             Attached.SetIcon(_buttonFullScreenCollapse, "fa-solid fa-compress");
+            ToolTip.SetTip(_buttonFullScreenCollapse, Se.Language.Options.Shortcuts.VideoFullScreen);
             _buttonFullScreenCollapse.Click += (_, _) => FullscreenCollapseRequested?.Invoke();
             stackPanel.Children.Add(_buttonFullScreenCollapse);
 
@@ -529,10 +533,12 @@ namespace Nikse.SubtitleEdit.Controls.VideoPlayer
             if (isPlaying)
             {
                 Attached.SetIcon(_buttonPlay, "fa-solid fa-pause");
+                ToolTip.SetTip(_buttonPlay, Se.Language.General.Pause);
             }
             else
             {
                 Attached.SetIcon(_buttonPlay, "fa-solid fa-play");
+                ToolTip.SetTip(_buttonPlay, Se.Language.General.Play);
             }
         }
 

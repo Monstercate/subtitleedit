@@ -12558,11 +12558,43 @@ public partial class MainViewModel :
         });
     }
 
-    private void LoadWaveformAndSpectrogram(string videoFileName)
+    [RelayCommand]
+    private async Task OpenAudioFromVideo()
+    {
+        if (string.IsNullOrEmpty(_videoFileName) || IsValidUrl(_videoFileName))
+        {
+            return;
+        }
+
+        if (IsWaveformGenerating || !await RequireFfmpegOk())
+        {
+            return;
+        }
+
+        LoadWaveformAndSpectrogram(_videoFileName, true);
+    }
+
+    private void LoadWaveformAndSpectrogram(string videoFileName, bool forceRegenerate = false)
     {
         var trackNumber = _audioTrack?.FfIndex ?? -1;
         var peakWaveFileName = WavePeakGenerator2.GetPeakWaveFileName(videoFileName, trackNumber);
         var spectrogramFileName = WavePeakGenerator2.SpectrogramDrawer.GetSpectrogramFileName(videoFileName, trackNumber);
+
+        if (forceRegenerate)
+        {
+            DeleteFileIfExists(peakWaveFileName);
+            DeleteFileIfExists(spectrogramFileName);
+            Dispatcher.UIThread.Post(() =>
+            {
+                if (AudioVisualizer != null)
+                {
+                    AudioVisualizer.WavePeaks = null;
+                    AudioVisualizer.SetSpectrogram(null);
+                    AudioVisualizer.ShotChanges = new List<double>();
+                }
+            });
+        }
+
         if (!File.Exists(peakWaveFileName) || (Se.Settings.Waveform.GenerateSpectrogram && !File.Exists(spectrogramFileName)))
         {
             if (FfmpegHelper.IsFfmpegInstalled())
@@ -14176,6 +14208,21 @@ public partial class MainViewModel :
                     e.Pointer.Capture(control);
                 }
             }
+        }
+    }
+
+    private static void DeleteFileIfExists(string fileName)
+    {
+        try
+        {
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
+            }
+        }
+        catch (Exception exception)
+        {
+            Se.LogError(exception);
         }
     }
 

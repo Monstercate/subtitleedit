@@ -83,6 +83,7 @@ public class LanguageMainMenu
     public string OpenVideo { get; set; }
     public string OpenVideoFromUrl { get; set; }
     public string CloseVideoFile { get; set; }
+    public string OpenAudioFromVideo { get; set; }
     public string AudioTracks { get; set; }
     public string SpeechToText { get; set; }
     public string TextToSpeech { get; set; }
@@ -207,6 +208,7 @@ public class LanguageMainMenu
         OpenVideo = "_Open video...";
         OpenVideoFromUrl = "Open video from _URL...";
         CloseVideoFile = "_Close video file";
+        OpenAudioFromVideo = "Open audio from video...";
         AudioTracks = "_Audio tracks";
         SpeechToText = "_Speech to text...";
         TextToSpeech = "_Text to speech...";

@@ -1,4 +1,4 @@
-﻿<Styles xmlns="https://github.com/avaloniaui">
+<Styles xmlns="https://github.com/avaloniaui">
     <Style Selector="DataGridCell:focus /template/ #FocusVisual">
         <Setter Property="IsVisible" Value="False"/>
     </Style>

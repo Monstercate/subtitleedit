@@ -78,7 +78,8 @@ public partial class EditCustomTextFormatViewModel : ObservableObject
                 return;
             }
 
-            PreviewText = CustomTextFormatter.GenerateCustomText(SelectedCustomFormat.ToTemplate(), _subtitles.Select(s => s.Paragraph).ToList(), _subtitleTitle, _videoFileName ?? string.Empty);
+            var paragraphs = _subtitles.Select(s => s.Paragraph).Where(p => p != null).Select(p => p!).ToList();
+            PreviewText = CustomTextFormatter.GenerateCustomText(SelectedCustomFormat.ToTemplate(), paragraphs, _subtitleTitle, _videoFileName ?? string.Empty);
         };
     }
 
