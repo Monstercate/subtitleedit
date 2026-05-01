@@ -94,16 +94,6 @@
           "TextMateSharp.Grammars": "2.0.3"
         }
       },
-      "AvaloniaUI.DiagnosticsSupport": {
-        "type": "Direct",
-        "requested": "[2.2.1, )",
-        "resolved": "2.2.1",
-        "contentHash": "PXviRj+8t6IT7JdnVhs1EET+VgGB/K1Ju3yL/Q9sXR2YD9NzkIYybyfJG3DPXcTYXpEJZJvxGiCTjH1N8AkLhQ==",
-        "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
-          "Microsoft.IO.RecyclableMemoryStream": "3.0.1"
-        }
-      },
       "CommunityToolkit.Mvvm": {
         "type": "Direct",
         "requested": "[8.4.2, )",
@@ -525,11 +515,6 @@
         "type": "Transitive",
         "resolved": "11.0.0-preview.2.26159.112",
         "contentHash": "1S1pHUdrdgz8tVgJCgMli0cN3np/k6aLTwYASyQFHhuPrUzq0YaTHzge23BUqgIbKCZSFLzQ2V9LKgxfRsCFeQ=="
-      },
-      "Microsoft.IO.RecyclableMemoryStream": {
-        "type": "Transitive",
-        "resolved": "3.0.1",
-        "contentHash": "s/s20YTVY9r9TPfTrN5g8zPF1YhwxyqO6PxUkrYTGI2B+OGPe9AdajWZrLhFqXIvqIW23fnUE4+ztrUWNU1+9g=="
       },
       "Newtonsoft.Json": {
         "type": "Transitive",

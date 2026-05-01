@@ -12298,8 +12298,8 @@ public partial class MainViewModel :
                 {
                     var answer = await MessageBox.Show(
                         Window!,
-                        "Download mpv?",
-                        $"{Environment.NewLine}\"Subtitle Edit\" requires mpv to play video/audio.{Environment.NewLine}{Environment.NewLine}Download and use mpv?",
+                        Se.Language.Main.DownloadMpvTitle,
+                        Environment.NewLine + Se.Language.Main.DownloadMpvQuestion,
                         MessageBoxButtons.YesNoCancel,
                         MessageBoxIcon.Question);
 
@@ -15049,14 +15049,14 @@ public partial class MainViewModel :
             var seconds = selectedItem.StartTime.TotalSeconds;
             if (Se.Settings.General.SubtitleDoubleClickAction == SubtitleDoubleClickActionType.GoToSubtitleOnly.ToString())
             {
-                vp.Position = seconds;
+                SeekVideoPlayer(vp, seconds);
                 AudioVisualizerCenterOnPositionIfNeeded(selectedItem, seconds);
                 return;
             }
 
             if (Se.Settings.General.SubtitleDoubleClickAction == SubtitleDoubleClickActionType.GoToSubtitleAndPlay.ToString())
             {
-                vp.Position = seconds;
+                SeekVideoPlayer(vp, seconds);
                 vp.VideoPlayer.Play();
                 AudioVisualizerCenterOnPositionIfNeeded(selectedItem, seconds);
                 return;
@@ -15065,7 +15065,7 @@ public partial class MainViewModel :
             if (Se.Settings.General.SubtitleDoubleClickAction == SubtitleDoubleClickActionType.GoToSubtitleAndPauseAndFocusTextBox.ToString())
             {
                 vp.VideoPlayer.Pause();
-                vp.Position = seconds;
+                SeekVideoPlayer(vp, seconds);
                 AudioVisualizerCenterOnPositionIfNeeded(selectedItem, seconds);
                 FocusEditTextBox();
                 return;
@@ -15073,9 +15073,15 @@ public partial class MainViewModel :
 
             // SubtitleDoubleClickActionType.GoToSubtitleAndPause
             vp.VideoPlayer.Pause();
-            vp.Position = seconds;
+            SeekVideoPlayer(vp, seconds);
             AudioVisualizerCenterOnPositionIfNeeded(selectedItem, seconds);
         }
+    }
+
+    private static void SeekVideoPlayer(VideoPlayerControl vp, double seconds)
+    {
+        vp.Position = seconds;
+        vp.VideoPlayer.Position = seconds;
     }
 
     private void AudioVisualizerCenterOnPositionIfNeeded(SubtitleLineViewModel selectedItem, double seconds)

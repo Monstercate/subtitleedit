@@ -835,7 +835,17 @@
     "sortedByStartTime": "按 \"显示\" 时间排序",
     "sortedByEndTime": "按 \"隐藏\" 时间排序",
     "colorHint": "给选中行标色",
-    "removeFormattingHint": "清除选中行格式"
+    "removeFormattingHint": "清除选中行格式",
+    "ffmpegDownloadedAndInstalledToX": "FFmpeg 已下载并安装到 {0}",
+    "nothingToSave": "没有需要保存的内容",
+    "nothingToSaveOriginal": "没有需要保存的内容（原始字幕）",
+    "liveSpellCheckLanguageXLoaded": "已加载实时拼写检查语言 {0}",
+    "downloadFfmpegTitle": "下载 FFmpeg？",
+    "downloadFfmpegQuestion": "播放在线视频和部分视频编辑功能需要 FFmpeg。\n\n现在下载 FFmpeg 吗？",
+    "downloadMpvTitle": "下载 mpv？",
+    "downloadMpvQuestion": "\"Subtitle Edit\" 需要 mpv 来播放视频/音频。\n\n要下载并使用 mpv 吗？",
+    "selectCurrentSubtitleWhilePlayingOn": "播放时自动选择当前字幕：开启",
+    "selectCurrentSubtitleWhilePlayingOff": "播放时自动选择当前字幕：关闭"
   },
   "file": {
     "ebuSaveOptions": {

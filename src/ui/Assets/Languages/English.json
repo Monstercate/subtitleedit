@@ -913,6 +913,8 @@
     "liveSpellCheckLanguageXLoaded": "Live spell check language {0} loaded",
     "downloadFfmpegTitle": "Download FFmpeg?",
     "downloadFfmpegQuestion": "FFmpeg is required for playing online videos and for some video editing features.\n\nDownload FFmpeg now?",
+    "downloadMpvTitle": "Download mpv?",
+    "downloadMpvQuestion": "\"Subtitle Edit\" requires mpv to play video/audio.\n\nDownload and use mpv?",
     "selectCurrentSubtitleWhilePlayingOn": "Select current subtitle while playing: ON",
     "selectCurrentSubtitleWhilePlayingOff": "Select current subtitle while playing: OFF"
   },

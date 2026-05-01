@@ -14,6 +14,8 @@ using Optris.Icons.Avalonia;
 using Optris.Icons.Avalonia.FontAwesome;
 using Optris.Icons.Avalonia.MaterialDesign;
 using System;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Nikse.SubtitleEdit
@@ -53,8 +55,9 @@ namespace Nikse.SubtitleEdit
                 Se.LoadSettings();
 
                 // Build and configure the app
-                var appBuilder = AppBuilder.Configure<Application>()
+                var appBuilder = ConfigureDeveloperTools(AppBuilder.Configure<Application>()
                     .UsePlatformDetect()
+                )
                     .With(new X11PlatformOptions
                     {
                         RenderingMode = new[] { X11RenderingMode.Glx, X11RenderingMode.Egl }
@@ -84,10 +87,6 @@ namespace Nikse.SubtitleEdit
                 // Setup main window
                 SetupMainWindow(lifetime);
 
-#if DEBUG
-                Application.Current?.AttachDeveloperTools();
-#endif
-
                 // Start the application
                 lifetime.Start(args);
             }
@@ -96,6 +95,43 @@ namespace Nikse.SubtitleEdit
                 Se.LogError(exception, "Critical error during application startup");
                 Environment.Exit(1);
             }
+        }
+
+        private static AppBuilder ConfigureDeveloperTools(AppBuilder appBuilder)
+        {
+#if DEBUG
+            try
+            {
+                var assembly = AppDomain.CurrentDomain.GetAssemblies()
+                                   .FirstOrDefault(p => p.GetName().Name == "AvaloniaUI.DiagnosticsSupport.Avalonia") ??
+                               Assembly.Load("AvaloniaUI.DiagnosticsSupport.Avalonia");
+                var extensionType = assembly.GetType("Avalonia.DeveloperToolsExtensions");
+                var optionsType = assembly.GetType("AvaloniaUI.DiagnosticsSupport.DeveloperToolsOptions");
+                var method = extensionType?.GetMethods(BindingFlags.Public | BindingFlags.Static)
+                    .FirstOrDefault(p => p.Name == "WithDeveloperTools" && p.GetParameters().Length == 2);
+
+                if (method == null || optionsType == null)
+                {
+                    return appBuilder;
+                }
+
+                var configureOptions = Delegate.CreateDelegate(
+                    typeof(Action<>).MakeGenericType(optionsType),
+                    typeof(Program).GetMethod(nameof(ConfigureDeveloperToolsOptions), BindingFlags.NonPublic | BindingFlags.Static)!);
+
+                return method.Invoke(null, new object[] { appBuilder, configureOptions }) as AppBuilder ?? appBuilder;
+            }
+            catch
+            {
+                return appBuilder;
+            }
+#else
+            return appBuilder;
+#endif
+        }
+
+        private static void ConfigureDeveloperToolsOptions(object options)
+        {
         }
 
         private static void ConfigureApplication(AppBuilder b, ClassicDesktopStyleApplicationLifetime lifetime)
@@ -140,8 +176,6 @@ namespace Nikse.SubtitleEdit
             {
                 UiUtil.SetFontName(Se.Settings.Appearance.FontName);
             }
-
-            UiUtil.RegisterStableDropDownWidths();
         }
 
         private static void SetupNativeMenu(Application app, ClassicDesktopStyleApplicationLifetime lifetime)
